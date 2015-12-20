@@ -13,22 +13,24 @@
       function mapStuff() {
 
       var inText = document.getElementById("input").value;
-    
-    var x = 0;
-    var y = 0;
-    var grid = {'0:0': 1};
-    
-    for (var i=0;i<inText.length;i++)
-    {
-      switch (inText[i]) {
-        case '^': y--; break;
-        case '>': x++; break;
-        case 'v': y++; break;
-        case '<': x--; break;
+
+      var x = [0,0];
+      var y = [0,0];
+      // first house gets two presents
+      var grid = {'0:0': 2};
+
+      for (var i=0;i<inText.length;i++)
+      {
+        var b = i % 2;
+        switch (inText[i]) {
+          case '^': y[b]--; break;
+          case '>': x[b]++; break;
+          case 'v': y[b]++; break;
+          case '<': x[b]--; break;
+        }
+
+        grid[x[b] + ':' + y[b]] = 1;
       }
-      
-      grid[x + ':' + y] = 1;
-    }
     
     document.getElementById("output").value = Object.keys(grid).length + " houses with multiple presents";
       }
