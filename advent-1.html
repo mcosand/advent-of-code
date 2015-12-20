@@ -1,0 +1,28 @@
+<html>
+  <head>
+    <title>Santa floor tracker!</title>
+  </head>
+  <body>
+    <textarea id="input" rows="20" cols="80"></textarea>
+    <button onclick="moveSanta()">Move Santa!</button>
+    <script type="text/javascript">
+      function moveSanta() {
+
+	    var inText = document.getElementById("input").value;
+		
+		var floor = 0;
+		for (var i=0; i < inText.length; i++) {
+		  if (inText[i] == '(') {
+		    floor++;
+		  } else {
+		    floor--;
+		  }
+		  
+		  console.log(inText[i] + ': ' + floor);
+		}
+
+		alert("Santa should go to floor: " + floor);
+      }
+    </script>
+  </body>
+</html>
