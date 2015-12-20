@@ -1,0 +1,44 @@
+<html>
+  <head>
+    <title>Paper Calculator!</title>
+	<style type="text/css">
+	  textarea,input,button { display: block; }
+	</style>
+  </head>
+  <body>
+    <textarea id="input" rows="20" cols="80"></textarea>
+    <button onclick="figurePaper()">Count presents!</button>
+	<input type="text" id="output"></input>
+    <script type="text/javascript">
+      function figurePaper() {
+
+	    var inText = document.getElementById("input").value;
+		
+		var lines = inText.split('\n');
+		var total = 0;
+		
+		for (var i=0; i<lines.length; i++) {
+		  var edges = lines[i].trim().split('x');
+		  
+		  var l = parseInt(edges[0]);
+		  var w = parseInt(edges[1]);
+		  var h = parseInt(edges[2]);
+
+		  var a = l * w;
+		  var b = w * h;
+		  var c = l * h;
+		  
+		  var flap = (a <= b && a <= c)
+		             ? a
+					 : (b <= a && b <= c)
+					   ? b
+					   : c;
+		  
+		  total += flap + 2 * (a + b + c);
+		}
+		
+		document.getElementById("output").value = total;
+      }
+    </script>
+  </body>
+</html>
