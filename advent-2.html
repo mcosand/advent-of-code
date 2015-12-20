@@ -24,17 +24,15 @@
 		  var w = parseInt(edges[1]);
 		  var h = parseInt(edges[2]);
 
-		  var a = l * w;
-		  var b = w * h;
-		  var c = l * h;
+          var bow = l * w * h;
 		  
-		  var flap = (a <= b && a <= c)
-		             ? a
-					 : (b <= a && b <= c)
-					   ? b
-					   : c;
+		  var half_around = (l >= w && l >= h)
+		             ? (w + h)
+					 : (w > l && w > h)
+					   ? (l + h)
+					   : (l + w);
 		  
-		  total += flap + 2 * (a + b + c);
+		  total += bow + 2 * half_around;
 		}
 		
 		document.getElementById("output").value = total;
