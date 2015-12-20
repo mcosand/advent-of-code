@@ -18,10 +18,12 @@
 		    floor--;
 		  }
 		  
+		  if (floor == -1) {
+		    alert("In the basement! i = " + i + ", so we're looking at position " + (i + 1));
+			break;
+		  }
 		  console.log(inText[i] + ': ' + floor);
 		}
-
-		alert("Santa should go to floor: " + floor);
       }
     </script>
   </body>
