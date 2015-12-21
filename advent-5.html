@@ -16,39 +16,18 @@
         var lines = inText.split('\n');
         var niceCount = 0;
         
-        for (var i=0;i<lines.length;i++) {
+        var testOne = /([a-z]{2}).*\1/;
+        var testTwo = /([a-z]).\1/;
+
+        for (var i = 0; i < lines.length; i++) {
           var line = lines[i].trim().toLowerCase();
-          
-          var numVowels = 0;
-          var last = null;
-          
-          var hasPaired = false;
-          var hasBad = false;
-          
-          for (var j = 0; j < line.length; j++) {
-            var current = line[j];
-            
-            // rule 1
-            if (current == 'a' || current == 'e' || current == 'i' || current == 'o' || current == 'u') {
-              numVowels++;
-            }
-            
-            // rule 2
-            if (current == last) {
-              hasPaired = true;
-            }
-            
-            // rule 3
-            var badTest = last + current;
-            if (badTest == 'ab' || badTest == 'cd' || badTest == 'pq' || badTest == 'xy') {
-              hasBad = true;
-              break;
-            }
-            
-            last = current;
-          }
-          
-          if (numVowels >= 3 && hasPaired && !hasBad) {
+
+          var resultOne = line.match(testOne);
+          var resultTwo = line.match(testTwo);
+          console.log(resultOne);
+
+          if (testOne.test(line) && testTwo.test(line)) {
+            console.log(line);
             niceCount++;
           }
         }
