@@ -1,0 +1,60 @@
+<html>
+  <head>
+    <title>Doesn't He Have Intern-Elves For This?</title>
+  <style type="text/css">
+    textarea,input,button { display: block; }
+  </style>
+  </head>
+  <body>
+    <textarea id="input" rows="20" cols="80"></textarea>
+    <button onclick="whoIsNice()">Naughty or Nice?</button>
+  <input type="text" style="width:100%" id="output"></input>
+    <script type="text/javascript">
+      function whoIsNice() {
+        var inText = document.getElementById("input").value;
+
+        var lines = inText.split('\n');
+        var niceCount = 0;
+        
+        for (var i=0;i<lines.length;i++) {
+          var line = lines[i].trim().toLowerCase();
+          
+          var numVowels = 0;
+          var last = null;
+          
+          var hasPaired = false;
+          var hasBad = false;
+          
+          for (var j = 0; j < line.length; j++) {
+            var current = line[j];
+            
+            // rule 1
+            if (current == 'a' || current == 'e' || current == 'i' || current == 'o' || current == 'u') {
+              numVowels++;
+            }
+            
+            // rule 2
+            if (current == last) {
+              hasPaired = true;
+            }
+            
+            // rule 3
+            var badTest = last + current;
+            if (badTest == 'ab' || badTest == 'cd' || badTest == 'pq' || badTest == 'xy') {
+              hasBad = true;
+              break;
+            }
+            
+            last = current;
+          }
+          
+          if (numVowels >= 3 && hasPaired && !hasBad) {
+            niceCount++;
+          }
+        }
+
+        document.getElementById("output").value = "Found " + niceCount + " strings";
+      }
+    </script>
+  </body>
+</html>
