@@ -19,6 +19,7 @@
         var ctx = document.getElementById("canvas").getContext("2d");
         ctx.fillStyle ="#000000";
         ctx.fillRect(0,0,1000,1000);
+        var changes = {"on": 1, "toggle": 2, "off": -1};
         
         for (var i=0;i<lines.length;i++) {
           var match = lines[i].trim().match(/^(turn (on|off)|toggle) (\d+),(\d+) through (\d+),(\d+)$/);
@@ -29,24 +30,20 @@
           
           var op = match[2] || match[1];
           
-          if (match[2]) {
-            ctx.fillStyle = (op == "off") ? "#000000" : "#ffffff";
-            ctx.fillRect(x,y,w,h);
-          } else {
-            var data = ctx.getImageData(x,y,w,h);
-            for (var j=0;j<data.data.length;j++) {
-              data.data[j] = 255 - ((j % 4 == 3) ? 0 : data.data[j])
-            }
-            ctx.putImageData(data, x, y);
-          }  
+          var data = ctx.getImageData(x,y,w,h);
+          for (var j=0;j<data.data.length;j+=4) {
+            if (data.data[j] > 253) { console.log('too high!'); return; }
+            data.data[j] = Math.max(0, data.data[j] + changes[op]);
+          }
+          ctx.putImageData(data, x, y);
         }
         
         var count = 0;
         var data = ctx.getImageData(0,0,1000,1000).data;
         for (var i = 0; i < 1000 * 1000; i++) {
-          if (data[i * 4]) count++;
+          count += data[i*4];
         }
-        document.getElementById("output").value = count + " lights on";
+        document.getElementById("output").value = count + " total brightness";
       }
     </script>
   </body>
