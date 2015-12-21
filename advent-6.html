@@ -1,0 +1,53 @@
+<html>
+  <head>
+    <title>Probably a Fire Hazard</title>
+  <style type="text/css">
+    textarea,input,button { display: block; }
+  </style>
+  </head>
+  <body>
+    <textarea id="input" rows="20" cols="80"></textarea>
+    <button onclick="lights()">Lights!</button>
+  <input type="text" style="width:100%" id="output"></input>
+    <canvas id="canvas" width="1000" height="1000" style="border:solid 1px black"></canvas>
+    <script type="text/javascript">
+      function lights() {
+        var inText = document.getElementById("input").value;
+
+        var lines = inText.split('\n');
+        
+        var ctx = document.getElementById("canvas").getContext("2d");
+        ctx.fillStyle ="#000000";
+        ctx.fillRect(0,0,1000,1000);
+        
+        for (var i=0;i<lines.length;i++) {
+          var match = lines[i].trim().match(/^(turn (on|off)|toggle) (\d+),(\d+) through (\d+),(\d+)$/);
+          var x = parseInt(match[3]);
+          var y = parseInt(match[4]);
+          var w = parseInt(match[5]) - x + 1;
+          var h = parseInt(match[6]) - y + 1;
+          
+          var op = match[2] || match[1];
+          
+          if (match[2]) {
+            ctx.fillStyle = (op == "off") ? "#000000" : "#ffffff";
+            ctx.fillRect(x,y,w,h);
+          } else {
+            var data = ctx.getImageData(x,y,w,h);
+            for (var j=0;j<data.data.length;j++) {
+              data.data[j] = 255 - ((j % 4 == 3) ? 0 : data.data[j])
+            }
+            ctx.putImageData(data, x, y);
+          }  
+        }
+        
+        var count = 0;
+        var data = ctx.getImageData(0,0,1000,1000).data;
+        for (var i = 0; i < 1000 * 1000; i++) {
+          if (data[i * 4]) count++;
+        }
+        document.getElementById("output").value = count + " lights on";
+      }
+    </script>
+  </body>
+</html>
