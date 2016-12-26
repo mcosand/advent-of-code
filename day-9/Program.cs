@@ -40,7 +40,7 @@ namespace day_9
 
     static int FindRoute(List<Node> nodes)
     {
-      int best = int.MaxValue;
+      int best = int.MinValue;
       Queue<string> states = new Queue<string>(
         nodes.Select(f => "0:" + f.Name)
         );
@@ -55,7 +55,7 @@ namespace day_9
 
         if (ns.Length == nodes.Count)
         {
-          if (sofar < best) best = sofar;
+          if (sofar > best) best = sofar;
           continue;
         }
 
