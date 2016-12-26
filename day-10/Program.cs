@@ -10,7 +10,7 @@ namespace day_10
   {
     static void Main(string[] args)
     {
-      int count = 40;
+      int count = 50;
       //count = 5;
       string input = "1113222113";
       //input = "1";
